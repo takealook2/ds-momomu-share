@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div id='content'>
+    <br><h2>게시판 검색🔍</h2><hr>
+    <form action="." method="post">{% csrf_token %}
+        {{form.as_table}}
+        {% comment %} <input type="submit" value="검색"/> {% endcomment %}
+        <button type="submit" class="btn btn-secondary">검색</button>
+    </form>
+    <br><br>
+    {% if object_list %}
+        {% for board in object_list %}
+            <h5><a href="#">{{board.title}}</a></h5>
+            {{ board.pub_date|date:"m.d H:i"}}
+            <p>{{board.body}}</p>
+            <hr>
+        {% endfor %}
+            
+    {% elif search_term %}
+        <p>검색어 <b>"{{search_term}}"</b>가 존재하지 않습니다.</p>
+    {% endif %}
+</div>
+
+
+{% endblock %}
